@@ -7,7 +7,7 @@ const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const BACKEND_URL = window.location.hostname === "localhost"
   ? "http://localhost:5000"
-  : "https://medical-reco-backend.onrender.com";
+  : "https://mini-project-cai-5l66.onrender.com";
 
 let currentUser = null;
 let savedReports = [];
@@ -483,6 +483,7 @@ async function deleteReport(reportId) {
     fetchSavedReports(); // Refresh the list
   }
 }
+
 
 
 
