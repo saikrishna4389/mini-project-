@@ -4,9 +4,10 @@ import numpy as np
 import pandas as pd
 import pickle
 import ast
+import os
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": os.getenv("FRONTEND_URL", "*")}})
 
 # Load model
 model = pickle.load(open('models/svc.pkl', 'rb'))
@@ -159,3 +160,4 @@ def predict():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
