@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🩺 Health Recommender</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="styles/tailwind.css" rel="stylesheet">
+    
+
+</head>
+<body class="font-sans text-gray-800">
+    <!-- Navigation Bar -->
+    <nav class="bg-blue-700 text-white p-4 sticky top-0 z-50 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-2xl font-bold flex items-center">
+                <span class="mr-2">🩺</span> Health Recommender
+            </div>
+            <div class="hidden md:flex space-x-6 text-lg">
+                <a href="#home" class="hover:text-blue-200 transition">Home</a>
+                <a href="#about" class="hover:text-blue-200 transition">About</a>
+                <a href="#how-it-works" class="hover:text-blue-200 transition">How It Works</a>
+                <a href="#contact" class="hover:text-blue-200 transition">Contact</a>
+                <span id="auth-links">
+                    <a href="#" id="login-link" class="hover:text-blue-200 transition">Login</a>
+                    <span> | </span>
+                    <a href="#" id="signup-link" class="hover:text-blue-200 transition">Sign Up</a>
+                </span>
+                <span id="profile-link" class="hidden">
+                    <a href="#dashboard" class="hover:text-blue-200 transition">Dashboard</a>
+                    <span> | </span>
+                    <a href="#profile" class="hover:text-blue-200 transition">Profile</a>
+                </span>
+            </div>
+            <button id="menu-toggle" class="md:hidden text-2xl focus:outline-none">
+                <span id="menu-icon">☰</span>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden flex flex-col space-y-4 mt-4 text-lg">
+            <a href="#home" class="hover:text-blue-200 transition">Home</a>
+            <a href="#about" class="hover:text-blue-200 transition">About</a>
+            <a href="#how-it-works" class="hover:text-blue-200 transition">How It Works</a>
+            <a href="#contact" class="hover:text-blue-200 transition">Contact</a>
+            <span id="mobile-auth-links">
+                <a href="#" id="mobile-login-link" class="hover:text-blue-200 transition">Login</a>
+                <span> | </span>
+                <a href="#" id="mobile-signup-link" class="hover:text-blue-200 transition">Sign Up</a>
+            </span>
+            <span id="mobile-profile-link" class="hidden">
+                <a href="#dashboard" class="hover:text-blue-200 transition">Dashboard</a>
+                <span> | </span>
+                <a href="#profile" class="hover:text-blue-200 transition">Profile</a>
+            </span>
+        </div>
+    </nav>
+
+    <!-- Login Modal (unchanged) -->
+    <div id="login-modal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeModal('login-modal')">&times;</span>
+      <h3>Welcome Back</h3>
+      <input type="email" id="login-email" placeholder="Email" required>
+      <input type="password" id="login-password" placeholder="Password" required>
+      <button class="auth-btn" onclick="handleLogin()">Login</button>
+      <div class="switch-form" onclick="switchForm('signup-modal')">Don't have an account? Sign Up</div>
+    </div>
+  </div>
+
+    <!-- Signup Modal (unchanged) -->
+     <div id="signup-modal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeModal('signup-modal')">&times;</span>
+      <h3>Create an Account</h3>
+      <input type="email" id="signup-email" placeholder="Email" required>
+      <input type="password" id="signup-password" placeholder="Password (min 6 characters)" required>
+      <button class="auth-btn" onclick="handleSignup()">Sign Up</button>
+      <div class="switch-form" onclick="switchForm('login-modal')">Already have an account? Login</div>
+    </div>
+  </div>
+
+
+   <!-- Home Section (unchanged) -->
+    <section id="home" class="min-h-[80vh] flex items-center justify-center text-center py-12 bg-white" style="background-image: linear-gradient(to bottom, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.1)), url('images/background.jpg');">
+        <div class="container mx-auto px-4">
+            <h1 class="custom-heading font-bold text-white mb-4">Welcome to the Health Recommender</h1>
+            <p class="custom-subheading text-white mb-4">Your personalized health recommendations start here.</p>
+            <p class="text-white mb-6 max-w-2xl mx-auto">We use AI to analyze your symptoms and provide tailored health advice, including medications, diets, and more. Start your journey to better health now!</p>
+            <a href="#prediction-info" class="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition">Learn More</a>
+        </div>
+    </section>
+
+    <!-- Prediction Form Info Section (Updated) -->
+    <section id="prediction-info" class="py-16 bg-blue-50">
+        <div class="container mx-auto px-4 flex flex-col items-center justify-center min-h-[50vh]">
+            <h2 class="section-heading mb-12 text-center">Discover Our Health Prediction Form</h2>
+            <div class="max-w-5xl mx-auto">
+                <div class="info-section flex items-center gap-3">
+                    <div class="info-image-container">
+                        <img src="images/health prediction.jpg" alt="Health Prediction Form">
+                    </div>
+                    <div class="info-content">
+                        <h3>Effortless Health Insights</h3>
+                        <p>Our Health Prediction Form uses AI to analyze your symptoms and provide accurate health predictions. Here’s why you’ll love it:</p>
+                        <ul>
+                            <li>Intuitive symptom input with common options.</li>
+                            <li>Fast and reliable AI-driven analysis.</li>
+                            <li>Instant results to guide your next steps.</li>
+                            <li>Designed for ease of use, even for beginners.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Health Report Info Section (unchanged) -->
+    <section id="report-info" class="py-16 bg-white">
+        <div class="container mx-auto px-4 flex flex-col items-center justify-center min-h-[50vh]">
+            <h2 class="section-heading mb-12 text-center">Your Personalized Health Report</h2>
+            <div class="max-w-5xl mx-auto">
+                <div class="info-section flex items-center gap-3">
+                    <div class="info-content">
+                        <h3>Comprehensive Health Guidance</h3>
+                        <p>The Health Report offers a detailed analysis of your health, helping you take control of your wellness journey:</p>
+                        <ul>
+                            <li>Predicted diseases based on your symptoms.</li>
+                            <li>In-depth descriptions of potential conditions.</li>
+                            <li>Tailored medication and diet recommendations.</li>
+                            <li>Practical precautions and workout plans.</li>
+                        </ul>
+                    </div>
+                    <div class="info-image-container">
+                        <img src="https://images.unsplash.com/photo-1585435557343-3b092031a831?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Health Report">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section (unchanged) -->
+    <section id="dashboard" class="py-12 bg-blue-50 hidden">
+        <div class="container mx-auto px-4">
+            <div id="symptoms">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Health Prediction Form</h2>
+                <div class="max-w-3xl mx-auto form-box">
+                    <div class="symptom-checker-container">
+                        <div class="symptom-input-section">
+                            <h3>Add Your Symptoms</h3>
+                            <div class="input-group">
+                                <input type="text" id="symptom-input" placeholder="Enter a symptom (e.g., headache, fever)" class="symptom-input"/>
+                                <button onclick="addSymptom()" class="add-btn" id="add-btn"><span>+</span></button>
+                            </div>
+                            <div class="common-symptoms-section">
+                                <p class="section-label">Common symptoms:</p>
+                                <div class="symptoms-grid" id="common-symptoms"></div>
+                            </div>
+                            <div class="added-symptoms-section" id="added-symptoms-container" style="display: none;">
+                                <p class="section-label">Your symptoms (<span id="symptom-count">0</span>):</p>
+                                <div class="symptoms-grid" id="added-symptoms"></div>
+                            </div>
+                            <div class="action-buttons">
+                                <button onclick="analyzeSymptoms()" class="analyze-btn" id="analyze-btn" disabled>Analyze Symptoms</button>
+                                <button onclick="resetForm()" class="reset-btn" id="reset-btn" disabled>Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="report" class="mt-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-10 text-center">Your Health Report</h2>
+                <div class="max-w-3xl mx-auto space-y-8">
+                    <div class="report-card">
+                        <h3 class="report-heading text-lg mb-2"><span class="report-icon">🩺</span> Predicted Disease</h3>
+                        <p class="report-text">[Disease Name]</p>
+                    </div>
+                    <div class="report-card">
+                        <h3 class="report-heading text-lg mb-2"><span class="report-icon">📜</span> Description</h3>
+                        <p class="report-text">[Disease Description]</p>
+                    </div>
+                    <div class="report-card">
+                        <h3 class="report-heading text-lg mb-2"><span class="report-icon">💊</span> Medications</h3>
+                        <p class="report-text">[Recommended Medications]</p>
+                    </div>
+                    <div class="report-card">
+                        <h3 class="report-heading text-lg mb-2"><span class="report-icon">🍽️</span> Diets</h3>
+                        <p class="report-text">[Recommended Diets]</p>
+                    </div>
+                    <div class="report-card">
+                        <h3 class="report-heading text-lg mb-2"><span class="report-icon">⚠️</span> Precautions</h3>
+                        <p class="report-text">[Recommended Precautions]</p>
+                    </div>
+                    <div class="report-card">
+                        <h3 class="report-heading text-lg mb-2"><span class="report-icon">🏋️</span> Workouts</h3>
+                        <p class="report-text">[Recommended Workouts]</p>
+                    </div>
+                    <div class="text-center">
+                        <button onclick="saveHealthReport()" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">Save Report</button>
+                    </div>                      
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Profile Section (unchanged) -->
+    <section id="profile" class="py-12 bg-white hidden">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Your Profile</h2>
+            <div class="max-w-3xl mx-auto form-box">
+                <div class="profile-section">
+                    <div class="profile-details">
+                        <p><strong>Email:</strong> <span id="profile-email"></span></p>
+                    </div>
+                    <button class="edit-btn" onclick="toggleEditForm()">Edit Details</button>
+                    <div class="edit-details-form hidden" id="edit-details-form">
+                        <input type="email" id="edit-email" placeholder="New Email" required>
+                        <input type="password" id="edit-password" placeholder="New Password (min 6 characters)" required>
+                        <button class="save-btn" onclick="updateUserDetails()">Save Changes</button>
+                    </div>
+                    <button class="logout-btn" onclick="handleLogout()">Logout</button>
+                </div>
+                <div class="saved-reports">
+                    <h4>Saved Health Reports</h4>
+                    <div id="saved-reports-list"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section (unchanged) -->
+    <section id="about" class="py-12 bg-blue-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl font-bold text-gray-800 mb-10 text-center">About Us 🏥</h2>
+            <div class="max-w-3xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-20">
+                    <div class="feature-box text-center">
+                        <span class="feature-badge">Core Feature</span>
+                        <div class="feature-icon">🤖</div>
+                        <h4 class="feature-heading text-lg mb-2">AI-Driven Insights</h4>
+                        <p class="feature-text">Leveraging AI for precise health predictions.<br>Reliable and fast.<br>Trusted by thousands.</p>
+                    </div>
+                    <div class="feature-box text-center">
+                        <span class="feature-badge">Data Quality</span>
+                        <div class="feature-icon">✅</div>
+                        <h4 class="feature-heading text-lg mb-2">Verified Data</h4>
+                        <p class="feature-text">Based on certified medical data.<br>Expert-backed.<br>Regularly updated.</p>
+                    </div>
+                    <div class="feature-box text-center">
+                        <span class="feature-badge">Experience</span>
+                        <div class="feature-icon">💡</div>
+                        <h4 class="feature-heading text-lg mb-2">Easy to Use</h4>
+                        <p class="feature-text">Intuitive design for seamless navigation.<br>Quick results.<br>For everyone.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section (unchanged) -->
+    <section id="how-it-works" class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl font-bold text-gray-800 mb-10 text-center">How It Works ⚙️</h2>
+            <div class="max-w-3xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-20">
+                    <div class="feature-box text-center">
+                        <span class="feature-badge">Step 1</span>
+                        <div class="feature-icon">📝</div>
+                        <h4 class="feature-heading text-lg mb-2">Enter Symptoms</h4>
+                        <p class="feature-text">List your symptoms in the form.<br>Be specific.<br>Takes seconds.</p>
+                    </div>
+                    <div class="feature-box text-center">
+                        <span class="feature-badge">Step 2</span>
+                        <div class="feature-icon">🔍</div>
+                        <h4 class="feature-heading text-lg mb-2">AI Analysis</h4>
+                        <p class="feature-text">AI evaluates potential conditions.<br>Instant analysis.<br>High accuracy.</p>
+                    </div>
+                    <div class="feature-box text-center">
+                        <span class="feature-badge">Step 3</span>
+                        <div class="feature-icon">💬</div>
+                        <h4 class="feature-heading text-lg mb-2">Receive Advice</h4>
+                        <p class="feature-text">Get personalized health tips.<br>Diets and more.<br>Simple steps.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Health Journey Section (unchanged) -->
+    <section id="health-journey" class="py-12 bg-blue-50">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Ready to Start Your Health Journey?</h2>
+            <p class="text-gray-600 mb-8 max-w-2xl mx-auto">Take control of your wellness today with our AI-driven health predictions. Enter your symptoms, get personalized reports, and follow expert recommendations to live healthier.</p>
+            <button onclick="openModal('login-modal')" class="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition">Try It Now</button>
+        </div>
+    </section>
+
+    <!-- Contact Section (unchanged) -->
+    <section id="contact" class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl font-bold text-gray-800 mb-10 text-center">Contact Us</h2>
+            <div class="max-w-lg mx-auto form-box">
+                <form class="space-y-6">
+                    <input type="text" placeholder="Name" class="contact-input w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <input type="email" placeholder="Email" class="contact-input w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <textarea placeholder="Message" rows="5" class="contact-input w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                    <button type="button" class="contact-button bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold w-full">Send Message</button>
+                </form>
+            </div>
+            <p class="text-center text-gray-600 mt-8">© 2025 Health Recommender. All rights reserved.</p>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="script/app.js"></script>
+</body>
+</html>
