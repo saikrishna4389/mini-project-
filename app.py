@@ -5,19 +5,21 @@ import pandas as pd
 import pickle
 import ast
 import os
+from pathlib import Path
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": os.getenv("FRONTEND_URL", "*")}})
 
 # Load model
-model = pickle.load(open('models/svc.pkl', 'rb'))
+MODEL_PATH = BASE_DIR / "models" / "svc.pkl"
+model = pickle.load(open(MODEL_PATH, "rb"))
 
 # Load CSV files
-description = pd.read_csv('data/description.csv')
-precautions = pd.read_csv('data/precautions_df.csv')
-workout = pd.read_csv('data/workout_df.csv')
-medications = pd.read_csv('data/medications.csv')
-diets = pd.read_csv('data/diets.csv')
+description = pd.read_csv(BASE_DIR / "data" / "description.csv")
+precautions = pd.read_csv(BASE_DIR / "data" / "precautions_df.csv")
+workout = pd.read_csv(BASE_DIR / "data" / "workout_df.csv")
+medications = pd.read_csv(BASE_DIR / "data" / "medications.csv")
+diets = pd.read_csv(BASE_DIR / "data" / "diets.csv")
 
 # Symptom to index dictionary (shortened here, use full dictionary from your model)
 symptoms_dict = {
@@ -133,6 +135,11 @@ def helper(dis):
     die = clean_list(diets[diets['Disease'] == dis]['Diet'].values)
     wrkout = clean_list(workout[workout['disease'] == dis]['workout'].values)
     return desc, pre, med, die, wrkout
+   
+# ✅ Health check
+@app.route("/healthz", methods=["GET"])
+def healthz():
+    return jsonify({"status": "ok"}), 200
 
 # API endpoint
 @app.route('/predict', methods=['POST'])
@@ -159,5 +166,6 @@ def predict():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
+
 
