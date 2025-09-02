@@ -5,6 +5,10 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const { createClient } = supabase;
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+const BACKEND_URL = window.location.hostname === "localhost"
+  ? "http://localhost:5000"
+  : "https://medical-reco-backend.onrender.com";
+
 let currentUser = null;
 let savedReports = [];
 const symptoms = [];
@@ -271,7 +275,7 @@ async function analyzeSymptoms() {
   showToast('Analyzing symptoms...', 'info');
 
   try {
-    const response = await fetch('http://localhost:5000/predict', {
+    const response = await fetch(`${BACKEND_URL}/predict`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ symptoms })
@@ -479,6 +483,7 @@ async function deleteReport(reportId) {
     fetchSavedReports(); // Refresh the list
   }
 }
+
 
 
 
